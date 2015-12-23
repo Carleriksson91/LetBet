@@ -50,8 +50,11 @@ StatsEngine.LeagueCollector = {
         console.log(response);
         var $leagueContainer = $("#leagues");
         this.BuildMarkup($leagueContainer, "h3", index, response.leagueCaption);
-        $(response.standing).each(function() {
-            $leagueContainer.append("<img style='width:50px; height:50px;' src=" + this.crestURI + "></img>");
+        $(response.standing).each(function () {
+            var name = this.teamName;
+            var position = this.position;
+            var teamLogo = "<img style='width:50px; height:50px;' src=" + this.crestURI + "></img>";
+            $leagueContainer.append("<div class='row' data-team=" +"'"+ name + "'" +"><div class='col-md-1'>" + position + "</div><div class='col-md-2'>" + teamLogo +  "</div><div class='col-md-8'>" + name + "</div><div class='col-md-1'>"+ this.points + "</div></div>");
         });
 
         //var $matchDayContainer = $("#matchDay");
@@ -59,7 +62,6 @@ StatsEngine.LeagueCollector = {
     },
     BuildMarkup: function (container, element, id, title) {
         $(container).append("<" + element + " id=" + id + ">" + title + "</" + element + ">");
-
     }
 }
 
