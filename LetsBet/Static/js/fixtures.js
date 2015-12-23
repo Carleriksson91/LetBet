@@ -1,7 +1,6 @@
 ﻿//API => http://api.football-data.org/index
 var apiToken = "b265292c34cd4b41992742e844eec5b1";
 
-
 //ADD PROMISE API FOR THIS FUCKUP TO WORK
 $(document).ready(function () {
     var leagueCollector = StatsEngine.LeagueCollector;
@@ -10,6 +9,7 @@ $(document).ready(function () {
     $(tesss).each(function () {
         console.log(this);
     });
+
 });
 
 
@@ -17,20 +17,19 @@ var StatsEngine = StatsEngine || {};
 StatsEngine.LeagueCollector = {
     leagues: [],
     GetLeagues: function () {
-        var $self = this;
         var baseUrl = "http://api.football-data.org/v1/soccerseasons/{leagueId}/leagueTable";
         var splittedUrl = baseUrl.split("/");
         //Begins on 394 for some reason :S
         for (var i = 394; i < 404; i++) {
             splittedUrl[5] = i;
             var leagueUrl = splittedUrl.join("/");
-            this.CallApi(leagueUrl);
+            this.CallApi(leagueUrl, i);
         }
         console.log(this.leagues);
         return this.leagues;
     },
     //Todo: Now it calls the API with a request for each leaguename, refactor this!!
-    CallApi: function (baseUrl) {
+    CallApi: function (baseUrl, index) {
         var $self = this;
         $.ajax({
             headers: { 'X-Auth-Token': apiToken },
@@ -44,11 +43,23 @@ StatsEngine.LeagueCollector = {
             //var teamId = res[1];
             //console.log(teamId);
             //console.log(response);
-            $self.GetResponse(response);
+            $self.GetResponse(response, index);
         });
     },
-    GetResponse: function (response) {
-        this.leagues.push(response);
+    GetResponse: function (response, index) {
+        console.log(response);
+        var $leagueContainer = $("#leagues");
+        this.BuildMarkup($leagueContainer, "h3", index, response.leagueCaption);
+        $(response.standing).each(function() {
+            $leagueContainer.append("<img style='width:50px; height:50px;' src=" + this.crestURI + "></img>");
+        });
+
+        //var $matchDayContainer = $("#matchDay");
+        //this.BuildMarkup($matchDayContainer, "h3", 0, response.matchday);
+    },
+    BuildMarkup: function (container, element, id, title) {
+        $(container).append("<" + element + " id=" + id + ">" + title + "</" + element + ">");
+
     }
 }
 
