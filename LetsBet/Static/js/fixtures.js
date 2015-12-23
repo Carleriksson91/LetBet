@@ -10,8 +10,10 @@ $(document).ready(function () {
         console.log(this);
     });
 
+    $("#leagues").on("click", ".leagueName h3", function() {
+        $(this).closest(".leagueName").hide();
+    });
 });
-
 
 var StatsEngine = StatsEngine || {};
 StatsEngine.LeagueCollector = {
@@ -54,14 +56,14 @@ StatsEngine.LeagueCollector = {
             var name = this.teamName;
             var position = this.position;
             var teamLogo = "<img style='width:50px; height:50px;' src=" + this.crestURI + "></img>";
-            $leagueContainer.append("<div class='row' data-team=" +"'"+ name + "'" +"><div class='col-md-1'>" + position + "</div><div class='col-md-2'>" + teamLogo +  "</div><div class='col-md-8'>" + name + "</div><div class='col-md-1'>"+ this.points + "</div></div>");
+            $leagueContainer.find("[data-leagueId=" + index+ "]").append("<div class='row' data-team=" +"'"+ name + "'" +"><div class='col-md-1'>" + position + "</div><div class='col-md-2'>" + teamLogo +  "</div><div class='col-md-8'>" + name + "</div><div class='col-md-1'>"+ this.points + "</div></div>");
         });
 
         //var $matchDayContainer = $("#matchDay");
         //this.BuildMarkup($matchDayContainer, "h3", 0, response.matchday);
     },
     BuildMarkup: function (container, element, id, title) {
-        $(container).append("<" + element + " id=" + id + ">" + title + "</" + element + ">");
+        $(container).append("<div class='leagueName' data-leagueId="+  id + ">" + "<" + element + " id=" + id + ">" + title + "</" + element + ">" + "</div>");
     }
 }
 

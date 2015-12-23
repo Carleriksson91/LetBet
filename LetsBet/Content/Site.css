@@ -22,3 +22,13 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.leagueName {
+    cursor: pointer !important;
+}
+.leagueName .row {
+    margin: 10px 0px;
+}
+.leagueName .row:hover {
+    font-size: 20px;
+}
