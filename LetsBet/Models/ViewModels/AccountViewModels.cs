@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace LetsBet.Models
+namespace LetsBet.Models.ViewModels
 {
     public class ExternalLoginConfirmationViewModel
     {

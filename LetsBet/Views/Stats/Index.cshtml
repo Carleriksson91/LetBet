@@ -1,0 +1,15 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@model LetsBet.Models.StatsViewModel
+
+<div class="row">
+    <div class="col-md-12">
+       @foreach (var league in Model.Leagues)
+       {
+           <h2>@Html.DisplayFor(x => league.Name)</h2>
+       }
+    </div>
+</div>
